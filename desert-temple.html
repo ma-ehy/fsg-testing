@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Desert Temple Generator</title>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+  <style>
+    body::before {
+      background-image: url('../styles/images/dt.png');
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <h1>Desert Temple Generator</h1>
+    <div class="container">
+      <button class="blocky-btn" id="desertTempleSeedBtn">Generate Seed</button>
+      <div class="download-box">
+        <a href="../ranked-addon.mcaddon" download class="blocky-btn filter-btn">Download Desert Temple Pack</a>
+      </div>
+      <div class="seed-box" id="desertTempleSeedBox"></div>
+      <div class="cooldown" id="desertTempleCooldownMsg"></div>
+      <div class="navigation-buttons">
+        <button class="blocky-btn back-btn" onclick="window.location.href='../index.html'">← Back</button>
+        <button class="blocky-btn help-btn" onclick="window.location.href='help.html'">Help</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let dtSeeds = [];
+    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxMxZ9zStBmy6ERJk1ne6_-zH8eOEce5ISf_wcWYmq2tHYhrwKmNSaYZ_LzDYEHQn3mIQ/exec';
+    let cooldownActive = false;
+    let cooldownTime = 10;
+
+    async function logToGoogleSheet(seed, filterType) {
+      try {
+        const timestamp = new Date().toISOString();
+        const data = {
+          seed: seed,
+          filterType: filterType,
+          timestamp: timestamp,
+          userAgent: navigator.userAgent,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        };
+
+        await fetch(GOOGLE_SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      } catch (error) {
+        console.error('Error logging to Google Sheets:', error);
+      }
+    }
+
+    async function loadSeeds() {
+      try {
+        const response = await fetch("../dt.json");
+        dtSeeds = await response.json();
+        document.getElementById("desertTempleSeedBtn").disabled = false;
+      } catch (err) {
+        console.error("Error loading seeds:", err);
+      }
+    }
+
+    function getRandomSeed(seedArray) {
+      const idx = Math.floor(Math.random() * seedArray.length);
+      return seedArray[idx];
+    }
+
+    function startCooldown() {
+      cooldownActive = true;
+      let timeLeft = cooldownTime;
+      const btn = document.getElementById('desertTempleSeedBtn');
+      const cooldownMsg = document.getElementById('desertTempleCooldownMsg');
+
+      btn.disabled = true;
+      cooldownMsg.textContent = `Cooldown: ${timeLeft}s`;
+
+      const interval = setInterval(() => {
+        timeLeft--;
+        cooldownMsg.textContent = `Cooldown: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          btn.disabled = false;
+          cooldownMsg.textContent = '';
+          cooldownActive = false;
+        }
+      }, 1000);
+    }
+
+    document.getElementById('desertTempleSeedBtn').addEventListener('click', () => {
+      if (!cooldownActive && dtSeeds.length > 0) {
+        const seedBox = document.getElementById('desertTempleSeedBox');
+        const seed = getRandomSeed(dtSeeds);
+        seedBox.textContent = seed;
+        seedBox.style.display = 'flex';
+        logToGoogleSheet(seed, 'Desert Temple');
+        startCooldown();
+      }
+    });
+
+    document.getElementById('desertTempleSeedBox').addEventListener('dblclick', () => {
+      const box = document.getElementById('desertTempleSeedBox');
+      const seed = box.textContent.trim();
+      if (seed !== "" && seed !== "Seed copied!") {
+        navigator.clipboard.writeText(seed).then(() => {
+          box.textContent = "Seed copied!";
+          setTimeout(() => {
+            box.textContent = seed;
+          }, 1500);
+        }).catch(err => {
+          console.error("Error in copy:", err);
+        });
+      }
+    });
+
+    document.getElementById("desertTempleSeedBtn").disabled = true;
+    loadSeeds();
+  </script>
+</body>
+</html>
