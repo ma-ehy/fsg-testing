@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MCBE 1.16 FSG Generator</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="page-container">
+    <h1>Bedrock 1.16 FSG Generator</h1>
+    
+    <div class="content-wrapper">
+      <!-- Left Column - Main Filters -->
+      <div class="left-column">
+        <div class="filter-box">
+          <div class="filter-title">Choose a Filter</div>
+          <div class="filter-grid">
+            <button class="blocky-btn filter-btn" data-page="stronghold">Stronghold Village</button>
+            <button class="blocky-btn filter-btn red-btn" data-page="ruined-portal">Ruined Portal</button>
+            
+            
+            <button class="blocky-btn filter-btn dark-blue-btn" data-page="ranked">Play Solo Ranked</button>
+          </div>
+    <!-- Miscellaneous Toggle Button -->
+    <div class="misc-container">
+        <button class="blocky-btn filter-btn bronze-btn misc-toggle-btn" id="miscToggle">
+            <span id="miscText">More Filters</span>
+            <span id="miscArrow">▼</span>
+        </button>
+    </div>
+          <!-- Expandable Miscellaneous Section -->
+          <div class="misc-expanded" id="miscExpanded">
+            <button class="blocky-btn filter-btn blue-btn" data-page="packless-stronghold">Packless Stronghold Village</button>
+            <button class="blocky-btn filter-btn orange-btn" data-page="village">Village</button>
+            <button class="blocky-btn filter-btn purple-btn" data-page="structureless">Structureless</button>
+            <button class="blocky-btn filter-btn gold-btn" data-page="classic">Classic</button>
+            <button class="blocky-btn filter-btn silver-btn" data-page="desert-temple">Desert Temple</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Resources -->
+      <div class="right-column">
+        <div class="resources-box">
+          <button class="blocky-btn resource-btn" data-page="help">Help</button>
+          <button class="blocky-btn resource-btn" data-page="tutorials">Tutorials</button>
+          <button class="blocky-btn resource-btn" data-page="resources">Resources</button>
+        </div>
+
+        <!-- Discord Section -->
+        <div class="discord">
+          <a href="https://discord.gg/Hngq5zYw3k" target="_blank">Join the Discord for any questions, feedback and info.</a>
+        </div>
+
+        <!-- Bottom buttons -->
+        <div class="bottom-buttons">
+          <button class="blocky-btn bottom-btn" data-page="stats">Stats</button>
+          <button class="blocky-btn bottom-btn" data-page="credits">Credits</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/navigation.js"></script>
+</body>
+</html>
