@@ -990,6 +990,22 @@ h1 {
   border-color: #4E342E;
 }
 
+.black-btn {
+  flex: 1;
+  font-size: 1.8rem;
+  padding: 12px 20px;
+  background: linear-gradient(45deg, 
+    #098661, 
+    #066d4e);
+  border-color: #053d36;
+}
+
+.black-btn:hover:not([disabled]) {
+  background: linear-gradient(45deg, 
+    #057055, 
+    #068051);
+}
+
 .bottom-btn:hover:not([disabled]) {
   background: linear-gradient(45deg, 
     #5D4037, 
@@ -998,4 +1014,33 @@ h1 {
 
 .bottom-btn:active:not([disabled]) {
   background: #4E342E;
+}
+
+.logo-image {
+  max-width: 1200px;
+  width: 100%;
+  margin: 20px auto 40px;
+  display: block;
+  image-rendering: pixelated;
+}
+
+@media (max-width: 768px) {
+  .logo-image {
+    margin: 10px auto 20px;
+  }
+}
+
+.title-image {
+  max-width:850px;
+  max-height: 200px;
+  width: 100%;
+  margin: 20px auto 40px;
+  display: block;
+  image-rendering: pixelated;
+}
+
+@media (max-width: 768px) {
+  .title-image {
+    margin: 10px auto 20px;
+  }
 }
