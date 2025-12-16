@@ -10,17 +10,17 @@ const pages = {
   'classic': 'pages/classic.html',
   'structureless': 'pages/structureless.html',
   'desert-temple': 'pages/desert-temple.html',
-  'credits': 'pages/credits.html',
   'help': 'pages/help.html',
   'tutorials': 'pages/tutorials.html',
-  'resources': 'pages/resources.html',
-  'stats': 'pages/stats.html'
+  'resources': 'pages/resources.html'
 };
 
 // Initialize navigation
 document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
   setupMiscToggle();
+  setupModalHandlers();
+  setupModalButtons(); 
 });
 
 function setupNavigation() {
@@ -31,7 +31,17 @@ function setupNavigation() {
     button.addEventListener('click', (e) => {
       e.preventDefault();
       const page = button.getAttribute('data-page');
-      navigateTo(page);
+      
+      // Check if it's a modal page
+      if (page === 'stats') {
+        document.getElementById('statsModal').classList.add('show');
+        loadStats();
+      } else if (page === 'credits') {
+        document.getElementById('creditsModal').classList.add('show');
+      } else {
+        // Navigate to page
+        navigateTo(page);
+      }
     });
   });
 }
@@ -49,6 +59,17 @@ function setupMiscToggle() {
   }
 }
 
+function setupModalHandlers() {
+  // Close modal when clicking outside
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('show');
+      }
+    });
+  });
+}
+
 function navigateTo(pageName) {
   const pageUrl = pages[pageName];
   
@@ -59,9 +80,57 @@ function navigateTo(pageName) {
   }
 }
 
-// Handle browser back/forward buttons
-window.addEventListener('popstate', (e) => {
-  if (e.state && e.state.page) {
-    navigateTo(e.state.page);
+// Modal functions
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('show');
+}
+
+async function loadStats() {
+  const STATS_URL = 'https://script.google.com/macros/s/AKfycbxMxZ9zStBmy6ERJk1ne6_-zH8eOEce5ISf_wcWYmq2tHYhrwKmNSaYZ_LzDYEHQn3mIQ/exec';
+  
+  try {
+    const response = await fetch(STATS_URL);
+    const data = await response.json();
+    
+    // Update stats
+    document.getElementById('totalSeeds').textContent = data.total || 0;
+    document.getElementById('strongholdCount').textContent = data.stronghold || 0;
+    document.getElementById('ruinedPortalCount').textContent = data.ruinedPortal || 0;
+    document.getElementById('villageCount').textContent = data.village || 0;
+    document.getElementById('classicCount').textContent = data.classic || 0;
+    document.getElementById('otherCount').textContent = data.other || 0;
+    
+    document.getElementById('statsLoading').style.display = 'none';
+    document.getElementById('statsContent').style.display = 'block';
+  } catch (error) {
+    document.getElementById('statsLoading').textContent = 'Failed to load stats. Please try again later.';
+    console.error('Error loading stats:', error);
   }
-});
+}
+
+function setupModalButtons() {
+  const statsBtn = document.getElementById('statsBtn');
+  const creditsBtn = document.getElementById('creditsBtn');
+  
+  if (statsBtn) {
+    statsBtn.addEventListener('click', () => {
+      document.getElementById('statsModal').classList.add('show');
+      loadStats();
+    });
+  }
+  
+  if (creditsBtn) {
+    creditsBtn.addEventListener('click', () => {
+      document.getElementById('creditsModal').classList.add('show');
+    });
+  }
+  
+  // Close modal when clicking outside
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('show');
+      }
+    });
+  });
+}
