@@ -839,8 +839,8 @@ h1 {
 }
 
 .sign-modal {
-  background: #8D6E63;
-  border: 8px solid var(--minecraft-dark-brown);
+  background: #463732;
+  border: 8px solid #251f1f;
   padding: 40px;
   max-width: 600px;
   width: 90vw;
@@ -848,7 +848,7 @@ h1 {
   overflow-y: auto;
   position: relative;
   box-shadow: 
-    inset 4px 4px 8px rgba(255,255,255,0.2),
+    inset 4px 4px 8px rgba(36, 32, 32, 0.2),
     inset -4px -4px 8px rgba(0,0,0,0.3),
     0 12px 24px rgba(0,0,0,0.6);
   image-rendering: pixelated;
@@ -913,7 +913,7 @@ h1 {
 
 .stat-label {
   font-size: 1.6rem;
-  color: #FFD700;
+  color: #ffffff;
   margin-bottom: 5px;
 }
 
@@ -940,7 +940,7 @@ h1 {
 /* Fix scrollbar for sign modal */
 .sign-modal {
   scrollbar-width: thin;
-  scrollbar-color: var(--minecraft-dark-brown) var(--minecraft-brown);
+  scrollbar-color: #251f1f #474242;
   overflow-x: hidden; /* Remove horizontal scrollbar */
 }
 
@@ -978,4 +978,24 @@ h1 {
   font-size: 1.6rem;
   color: #ffffff;
   margin-bottom: 5px;
+}
+
+.bottom-btn {
+  flex: 1;
+  font-size: 1.8rem;
+  padding: 12px 20px;
+  background: linear-gradient(45deg, 
+    #6D4C41, 
+    #5D4037);
+  border-color: #4E342E;
+}
+
+.bottom-btn:hover:not([disabled]) {
+  background: linear-gradient(45deg, 
+    #5D4037, 
+    #6D4C41);
+}
+
+.bottom-btn:active:not([disabled]) {
+  background: #4E342E;
 }
