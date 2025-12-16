@@ -85,27 +85,9 @@ function closeModal(modalId) {
   document.getElementById(modalId).classList.remove('show');
 }
 
-async function loadStats() {
-  const STATS_URL = 'https://script.google.com/macros/s/AKfycbxMxZ9zStBmy6ERJk1ne6_-zH8eOEce5ISf_wcWYmq2tHYhrwKmNSaYZ_LzDYEHQn3mIQ/exec';
-  
-  try {
-    const response = await fetch(STATS_URL);
-    const data = await response.json();
-    
-    // Update stats
-    document.getElementById('totalSeeds').textContent = data.total || 0;
-    document.getElementById('strongholdCount').textContent = data.stronghold || 0;
-    document.getElementById('ruinedPortalCount').textContent = data.ruinedPortal || 0;
-    document.getElementById('villageCount').textContent = data.village || 0;
-    document.getElementById('classicCount').textContent = data.classic || 0;
-    document.getElementById('otherCount').textContent = data.other || 0;
-    
-    document.getElementById('statsLoading').style.display = 'none';
-    document.getElementById('statsContent').style.display = 'block';
-  } catch (error) {
-    document.getElementById('statsLoading').textContent = 'Failed to load stats. Please try again later.';
-    console.error('Error loading stats:', error);
-  }
+function loadStats() {
+  document.getElementById('statsLoading').style.display = 'none';
+  document.getElementById('statsContent').style.display = 'block';
 }
 
 function setupModalButtons() {
@@ -134,3 +116,4 @@ function setupModalButtons() {
     });
   });
 }
+
