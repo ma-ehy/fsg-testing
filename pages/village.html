@@ -22,7 +22,12 @@
         <a href="../ranked-addon.mcaddon" download class="blocky-btn filter-btn">Download Village FSG Pack</a>
       </div>
       <div class="seed-box" id="villageSeedBox"></div>
-      <div class="cooldown" id="villageCooldownMsg"></div>
+      <div class="button-row" id="copyBtnRow" style="display: none;">
+  <button class="blocky-btn copy-btn" id="copyBtn">Copy Seed</button>
+</div>
+      <div class="cooldown-container" id="cooldownContainer" style="display: none;">
+  <div class="cooldown-bar" id="cooldownBar"></div>
+</div>
       <div class="navigation-buttons">
         <button class="blocky-btn back-btn" onclick="window.location.href='../index.html'">← Back</button>
         <button class="blocky-btn help-btn" onclick="window.location.href='help.html'">Help</button>
@@ -76,25 +81,44 @@
     }
 
     function startCooldown() {
-      cooldownActive = true;
-      let timeLeft = cooldownTime;
-      const btn = document.getElementById('villageSeedBtn');
-      const cooldownMsg = document.getElementById('villageCooldownMsg');
+  cooldownActive = true;
+  let timeLeft = cooldownTime;
+  const btn = document.getElementById('villageSeedBtn'); // Change ID per page
+  const container = document.getElementById('cooldownContainer');
+  const bar = document.getElementById('cooldownBar');
 
-      btn.disabled = true;
-      cooldownMsg.textContent = `Cooldown: ${timeLeft}s`;
+  btn.disabled = true;
+  container.style.display = 'block';
+  bar.style.width = '100%';
 
-      const interval = setInterval(() => {
-        timeLeft--;
-        cooldownMsg.textContent = `Cooldown: ${timeLeft}s`;
-        if (timeLeft <= 0) {
-          clearInterval(interval);
-          btn.disabled = false;
-          cooldownMsg.textContent = '';
-          cooldownActive = false;
-        }
-      }, 1000);
+  const interval = setInterval(() => {
+    timeLeft--;
+    const percentage = (timeLeft / cooldownTime) * 100;
+    bar.style.width = percentage + '%';
+    
+    if (timeLeft <= 0) {
+      clearInterval(interval);
+      btn.disabled = false;
+      container.style.display = 'none';
+      cooldownActive = false;
     }
+  }, 1000);
+}
+  
+  document.getElementById('copyBtn').addEventListener('click', () => {
+  const box = document.getElementById('villageSeedBox'); // Change ID per page
+  const seed = box.textContent.trim();
+  if (seed !== "" && seed !== "Seed copied!") {
+    navigator.clipboard.writeText(seed).then(() => {
+      const copyBtn = document.getElementById('copyBtn');
+      const originalText = copyBtn.textContent;
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => {
+        copyBtn.textContent = originalText;
+      }, 1500);
+    });
+  }
+});s
 
     document.getElementById('villageSeedBtn').addEventListener('click', () => {
       if (!cooldownActive && villageSeeds.length > 0) {
@@ -102,6 +126,9 @@
         const seed = getRandomSeed(villageSeeds);
         seedBox.textContent = seed;
         seedBox.style.display = 'flex';
+        document.getElementById('copyBtnRow').style.display = 'flex';
+        const downloadBox = document.getElementById('villageDownloadBox');
+        m.downloadBox.style.display = 'none';
         logToGoogleSheet(seed, 'Village');
         startCooldown();
       }
