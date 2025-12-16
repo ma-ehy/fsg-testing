@@ -19,7 +19,12 @@
     <div class="container">
       <button class="blocky-btn" id="packlessStrongholdSeedBtn">Generate Seed</button>
       <div class="seed-box" id="packlessStrongholdSeedBox"></div>
-      <div class="cooldown" id="packlessStrongholdCooldownMsg"></div>
+      <div class="button-row" id="copyBtnRow" style="display: none;">
+        <button class="blocky-btn copy-btn" id="copyBtn">Copy Seed</button>
+      </div>
+      <div class="cooldown-container" id="cooldownContainer" style="display: none;">
+        <div class="cooldown-bar" id="cooldownBar"></div>
+      </div>
       <div class="navigation-buttons">
         <button class="blocky-btn back-btn" onclick="window.location.href='../index.html'">← Back</button>
         <button class="blocky-btn help-btn" onclick="window.location.href='help.html'">Help</button>
@@ -76,18 +81,22 @@
       cooldownActive = true;
       let timeLeft = cooldownTime;
       const btn = document.getElementById('packlessStrongholdSeedBtn');
-      const cooldownMsg = document.getElementById('packlessStrongholdCooldownMsg');
+      const container = document.getElementById('cooldownContainer');
+      const bar = document.getElementById('cooldownBar');
 
       btn.disabled = true;
-      cooldownMsg.textContent = `Cooldown: ${timeLeft}s`;
+      container.style.display = 'block';
+      bar.style.width = '100%';
 
       const interval = setInterval(() => {
         timeLeft--;
-        cooldownMsg.textContent = `Cooldown: ${timeLeft}s`;
+        const percentage = (timeLeft / cooldownTime) * 100;
+        bar.style.width = percentage + '%';
+        
         if (timeLeft <= 0) {
           clearInterval(interval);
           btn.disabled = false;
-          cooldownMsg.textContent = '';
+          container.style.display = 'none';
           cooldownActive = false;
         }
       }, 1000);
@@ -99,6 +108,7 @@
         const seed = getRandomSeed(packlessStrongholdSeeds);
         seedBox.textContent = seed;
         seedBox.style.display = 'flex';
+        document.getElementById('copyBtnRow').style.display = 'flex';
         logToGoogleSheet(seed, 'Packless Stronghold Village');
         startCooldown();
       }
@@ -116,6 +126,23 @@
         }).catch(err => {
           console.error("Error in copy:", err);
         });
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'copyBtn') {
+        const box = document.getElementById('packlessStrongholdSeedBox');
+        const seed = box.textContent.trim();
+        if (seed !== "" && seed !== "Seed copied!") {
+          navigator.clipboard.writeText(seed).then(() => {
+            const copyBtn = document.getElementById('copyBtn');
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = "Copied!";
+            setTimeout(() => {
+              copyBtn.textContent = originalText;
+            }, 1500);
+          });
+        }
       }
     });
 
