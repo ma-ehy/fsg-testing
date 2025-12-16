@@ -784,7 +784,7 @@ h1 {
   height: 100%;
   background: linear-gradient(45deg, var(--minecraft-green), var(--minecraft-dark-green));
   width: 100%;
-  transition: width 0.1s linear;
+  transition: width 1s linear;
 }
 
 
@@ -818,3 +818,4 @@ h1 {
 .copy-btn:active:not([disabled]) {
   background: #1565C0;
 }
+
