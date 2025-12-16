@@ -719,6 +719,8 @@ h1 {
     0 4px 8px rgba(0,0,0,0.3);
   position: relative;
   image-rendering: pixelated;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .download-box {
@@ -731,7 +733,7 @@ h1 {
 .navigation-buttons {
   display: flex;
   gap: 25px;
-  margin-top: -35px;
+  margin-top: 20px;
   justify-content: center;
   width: 100%;
   padding-top: 30px;
@@ -766,4 +768,53 @@ h1 {
 
 .back-btn:active:not([disabled]), .help-btn:active:not([disabled]) {
   background: var(--minecraft-dark-brown);
+}
+
+.cooldown-container {
+  width: 100%;
+  height: 30px;
+  background: var(--minecraft-black);
+  border: 4px solid var(--minecraft-dark-gray);
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cooldown-bar {
+  height: 100%;
+  background: linear-gradient(45deg, var(--minecraft-green), var(--minecraft-dark-green));
+  width: 100%;
+  transition: width 0.1s linear;
+}
+
+
+.blocky-btn {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.button-row {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.copy-btn {
+  font-size: 1.8rem;
+  padding: 12px 25px;
+  background: linear-gradient(45deg, #2196F3, #1976D2);
+  border-color: #1565C0;
+}
+
+.copy-btn:hover:not([disabled]) {
+  background: linear-gradient(45deg, #1976D2, #2196F3);
+}
+
+.copy-btn:active:not([disabled]) {
+  background: #1565C0;
 }
