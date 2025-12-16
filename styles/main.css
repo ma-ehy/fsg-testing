@@ -819,3 +819,163 @@ h1 {
   background: #1565C0;
 }
 
+
+/* Modal/Sign Styles */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.sign-modal {
+  background: #8D6E63;
+  border: 8px solid var(--minecraft-dark-brown);
+  padding: 40px;
+  max-width: 600px;
+  width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 
+    inset 4px 4px 8px rgba(255,255,255,0.2),
+    inset -4px -4px 8px rgba(0,0,0,0.3),
+    0 12px 24px rgba(0,0,0,0.6);
+  image-rendering: pixelated;
+}
+
+.sign-modal::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--minecraft-dark-brown) 0px,
+    var(--minecraft-dark-brown) 4px,
+    var(--minecraft-black) 4px,
+    var(--minecraft-black) 8px
+  );
+  z-index: -1;
+}
+
+.sign-modal h2 {
+  font-family: 'VT323', monospace;
+  font-size: 3rem;
+  color: var(--minecraft-white);
+  text-align: center;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0px var(--minecraft-black);
+}
+
+.sign-modal p {
+  font-family: 'VT323', monospace;
+  font-size: 2rem;
+  color: var(--minecraft-white);
+  line-height: 1.6;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+}
+
+.sign-modal .close-btn {
+  font-size: 2rem;
+  padding: 12px 30px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.stat-item {
+  background: rgba(0,0,0,0.3);
+  padding: 15px;
+  border: 3px solid var(--minecraft-dark-brown);
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 1.6rem;
+  color: #FFD700;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  color: var(--minecraft-white);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .sign-modal h2 {
+    font-size: 2.5rem;
+  }
+  
+  .sign-modal p {
+    font-size: 1.8rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fix scrollbar for sign modal */
+.sign-modal {
+  scrollbar-width: thin;
+  scrollbar-color: var(--minecraft-dark-brown) var(--minecraft-brown);
+  overflow-x: hidden; /* Remove horizontal scrollbar */
+}
+
+/* Custom scrollbar for webkit browsers (Chrome, Safari, Edge) */
+.sign-modal::-webkit-scrollbar {
+  width: 12px;
+}
+
+.sign-modal::-webkit-scrollbar-track {
+  background: var(--minecraft-brown);
+  border: 2px solid var(--minecraft-dark-brown);
+}
+
+.sign-modal::-webkit-scrollbar-thumb {
+  background: var(--minecraft-dark-brown);
+  border: 2px solid var(--minecraft-brown);
+  border-radius: 0;
+}
+
+.sign-modal::-webkit-scrollbar-thumb:hover {
+  background: var(--dirt-brown);
+}
+
+/* Make credits text white instead of yellow */
+#creditsModal .sign-modal p {
+  color: var(--minecraft-white);
+}
+
+#creditsModal .sign-modal p strong {
+  color: #ffffff; /* Keep the labels yellow */
+}
+
+/* Keep stat labels yellow but everything else white */
+.stat-label {
+  font-size: 1.6rem;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
