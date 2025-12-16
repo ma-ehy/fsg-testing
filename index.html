@@ -59,14 +59,62 @@
         </div>
 
         <!-- Bottom buttons -->
-        <div class="bottom-buttons">
-          <button class="blocky-btn bottom-btn" data-page="stats">Stats</button>
-          <button class="blocky-btn bottom-btn" data-page="credits">Credits</button>
-        </div>
+<!-- Bottom buttons -->
+<div class="bottom-buttons">
+  <button class="blocky-btn bottom-btn" id="statsBtn">Stats</button>
+  <button class="blocky-btn bottom-btn" id="creditsBtn">Credits</button>
+</div>
       </div>
     </div>
   </div>
+  <!-- Stats Modal -->
+<div class="modal-overlay" id="statsModal">
+  <div class="sign-modal">
+    <h2>Generator Statistics</h2>
+    <p id="statsLoading">Loading stats...</p>
+    <div id="statsContent" style="display: none;">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-label">Total Seeds Generated</div>
+          <div class="stat-value" id="totalSeeds">4539</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Stronghold Village</div>
+          <div class="stat-value" id="strongholdCount">1434</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Ruined Portal</div>
+          <div class="stat-value" id="ruinedPortalCount">2145</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Ranked</div>
+          <div class="stat-value" id="villageCount">605</div>
+        </div>
+      </div>
+    </div>
+    <button class="blocky-btn close-btn" onclick="closeModal('statsModal')">Close</button>
+  </div>
+</div>
 
+<!-- Credits Modal -->
+<div class="modal-overlay" id="creditsModal">
+  <div class="sign-modal">
+    <h2>Credits</h2>
+    <p><strong>Developer:</strong> ma_ehy</p>
+    <p><strong>Special Thanks:</strong></p>
+    <p>- Emerald</p>
+    <p>- Crazdenuy</p>
+    <p>- Everyone who tested and played this</p>
+    <p><strong>Tool Used:</strong></p>
+    <p>- Twinkle Star's 1.16 seed finder</p>
+    <p>- Community-contributed seed databases</p>
+    <p><strong>Version:</strong> 2.0</p>
+    <p style="margin-top: 30px; font-style: italic; text-align: center;">
+      Built with dedication for the bedrock speedrunning community <3
+    </p>
+    <button class="blocky-btn close-btn" onclick="closeModal('creditsModal')">Close</button>
+  </div>
+</div>
   <script src="scripts/navigation.js"></script>
 </body>
 </html>
