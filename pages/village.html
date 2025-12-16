@@ -104,21 +104,6 @@
     }
   }, 1000);
 }
-  
-  document.getElementById('copyBtn').addEventListener('click', () => {
-  const box = document.getElementById('villageSeedBox'); // Change ID per page
-  const seed = box.textContent.trim();
-  if (seed !== "" && seed !== "Seed copied!") {
-    navigator.clipboard.writeText(seed).then(() => {
-      const copyBtn = document.getElementById('copyBtn');
-      const originalText = copyBtn.textContent;
-      copyBtn.textContent = "Copied!";
-      setTimeout(() => {
-        copyBtn.textContent = originalText;
-      }, 1500);
-    });
-  }
-});s
 
     document.getElementById('villageSeedBtn').addEventListener('click', () => {
       if (!cooldownActive && villageSeeds.length > 0) {
@@ -128,7 +113,7 @@
         seedBox.style.display = 'flex';
         document.getElementById('copyBtnRow').style.display = 'flex';
         const downloadBox = document.getElementById('villageDownloadBox');
-        m.downloadBox.style.display = 'none';
+        downloadBox.style.display = 'none';
         logToGoogleSheet(seed, 'Village');
         startCooldown();
       }
@@ -149,6 +134,21 @@
       }
     });
 
+   document.getElementById('copyBtn').addEventListener('click', () => {
+  const box = document.getElementById('villageSeedBox'); // Change ID per page
+  const seed = box.textContent.trim();
+  if (seed !== "" && seed !== "Seed copied!") {
+    navigator.clipboard.writeText(seed).then(() => {
+      const copyBtn = document.getElementById('copyBtn');
+      const originalText = copyBtn.textContent;
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => {
+        copyBtn.textContent = originalText;
+      }, 1500);
+    });
+  }
+});
+  
     document.getElementById("villageSeedBtn").disabled = true;
     loadSeeds();
   </script>
