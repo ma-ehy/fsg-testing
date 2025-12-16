@@ -106,18 +106,18 @@
 }
 
     document.getElementById('villageSeedBtn').addEventListener('click', () => {
-      if (!cooldownActive && villageSeeds.length > 0) {
-        const seedBox = document.getElementById('villageSeedBox');
-        const seed = getRandomSeed(villageSeeds);
-        seedBox.textContent = seed;
-        seedBox.style.display = 'flex';
-        document.getElementById('copyBtnRow').style.display = 'flex';
-        const downloadBox = document.getElementById('villageDownloadBox');
-        downloadBox.style.display = 'none';
-        logToGoogleSheet(seed, 'Village');
-        startCooldown();
-      }
-    });
+  if (!cooldownActive && villageSeeds.length > 0) {
+    const seedBox = document.getElementById('villageSeedBox');
+    const seed = getRandomSeed(villageSeeds);
+    seedBox.textContent = seed;
+    seedBox.style.display = 'flex';
+    document.getElementById('copyBtnRow').style.display = 'flex';
+    const downloadBox = document.getElementById('villageDownloadBox');
+    downloadBox.style.display = 'none';
+    logToGoogleSheet(seed, 'Village');
+    startCooldown();
+  }
+});
 
     document.getElementById('villageSeedBox').addEventListener('dblclick', () => {
       const box = document.getElementById('villageSeedBox');
@@ -134,20 +134,11 @@
       }
     });
 
-   document.getElementById('copyBtn').addEventListener('click', () => {
-  const box = document.getElementById('villageSeedBox'); // Change ID per page
-  const seed = box.textContent.trim();
-  if (seed !== "" && seed !== "Seed copied!") {
-    navigator.clipboard.writeText(seed).then(() => {
-      const copyBtn = document.getElementById('copyBtn');
-      const originalText = copyBtn.textContent;
-      copyBtn.textContent = "Copied!";
-      setTimeout(() => {
-        copyBtn.textContent = originalText;
-      }, 1500);
-    });
-  }
-});
+   document.addEventListener('click', (e) => {
+  if (e.target && e.target.id === 'copyBtn') {
+    const box = document.getElementById('villageSeedBox');
+    const seed = box.textContent.trim();
+    if (seed !== "" && seed !== "Seed copied!") {
   
     document.getElementById("villageSeedBtn").disabled = true;
     loadSeeds();
