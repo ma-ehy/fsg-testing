@@ -34,6 +34,12 @@ const modesSounds = {
   'desert-temple': new Audio('./desert_temple.ogg')
 };
 
+// Preload all sounds to avoid loading delays
+chestOpenSound.preload = 'auto';
+chestCloseSound.preload = 'auto';
+menuClickSound.preload = 'auto';
+Object.values(modesSounds).forEach(sound => sound.preload = 'auto');
+
 // Initialize navigation
 document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
@@ -41,6 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
   setupModalHandlers();
   setupModalButtons(); 
 });
+
+function playSound(sound) {
+  sound.currentTime = 0;
+  // Use a promise to handle sound playback
+  const playPromise = sound.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(error => {
+      console.log("Sound play prevented:", error);
+    });
+  }
+}
 
 function setupNavigation() {
   // Add click handlers to all buttons with data-page attribute
@@ -53,32 +70,24 @@ function setupNavigation() {
       
       // Check if it's a modal page
       if (page === 'stats') {
-        menuClickSound.currentTime = 0;
-        menuClickSound.play();
+        playSound(menuClickSound);
         document.getElementById('statsModal').classList.add('show');
         loadStats();
       } else if (page === 'credits') {
-        menuClickSound.currentTime = 0;
-        menuClickSound.play();
+        playSound(menuClickSound);
         document.getElementById('creditsModal').classList.add('show');
       } else if (page === 'help' || page === 'tutorials' || page === 'resources') {
-        // Play menu click for resource buttons and wait before navigating
-        menuClickSound.currentTime = 0;
-        menuClickSound.play();
-        setTimeout(() => {
-          navigateTo(page);
-        }, 300); // Adjust delay as needed (300ms = 0.3 seconds)
+        // Play menu click for resource buttons
+        playSound(menuClickSound);
+        // Navigate immediately
+        setTimeout(() => navigateTo(page), 150);
       } else {
-        // Play mode-specific sound for filter buttons and wait before navigating
+        // Play mode-specific sound for filter buttons
         if (modesSounds[page]) {
-          modesSounds[page].currentTime = 0;
-          modesSounds[page].play();
-          setTimeout(() => {
-            navigateTo(page);
-          }, 700); // Adjust delay as needed 
-        } else {
-          navigateTo(page);
+          playSound(modesSounds[page]);
         }
+        // Navigate immediately
+        setTimeout(() => navigateTo(page), 150);
       }
     });
   });
@@ -96,11 +105,9 @@ function setupMiscToggle() {
       
       // Play appropriate sound based on state
       if (miscExpanded.classList.contains('show')) {
-        chestOpenSound.currentTime = 0; // Reset to start
-        chestOpenSound.play();
+        playSound(chestOpenSound);
       } else {
-        chestCloseSound.currentTime = 0; // Reset to start
-        chestCloseSound.play();
+        playSound(chestCloseSound);
       }
     });
   }
@@ -143,8 +150,7 @@ function setupModalButtons() {
   
   if (statsBtn) {
     statsBtn.addEventListener('click', () => {
-      menuClickSound.currentTime = 0;
-      menuClickSound.play();
+      playSound(menuClickSound);
       document.getElementById('statsModal').classList.add('show');
       loadStats();
     });
@@ -152,8 +158,7 @@ function setupModalButtons() {
   
   if (creditsBtn) {
     creditsBtn.addEventListener('click', () => {
-      menuClickSound.currentTime = 0;
-      menuClickSound.play();
+      playSound(menuClickSound);
       document.getElementById('creditsModal').classList.add('show');
     });
   }
