@@ -62,19 +62,23 @@ function setupNavigation() {
         menuClickSound.play();
         document.getElementById('creditsModal').classList.add('show');
       } else if (page === 'help' || page === 'tutorials' || page === 'resources') {
-        // Play menu click for resource buttons
+        // Play menu click for resource buttons and wait before navigating
         menuClickSound.currentTime = 0;
         menuClickSound.play();
-        // Navigate to page
-        navigateTo(page);
+        setTimeout(() => {
+          navigateTo(page);
+        }, 300); // Adjust delay as needed (300ms = 0.3 seconds)
       } else {
-        // Play mode-specific sound for filter buttons
+        // Play mode-specific sound for filter buttons and wait before navigating
         if (modesSounds[page]) {
           modesSounds[page].currentTime = 0;
           modesSounds[page].play();
+          setTimeout(() => {
+            navigateTo(page);
+          }, 700); // Adjust delay as needed 
+        } else {
+          navigateTo(page);
         }
-        // Navigate to page
-        navigateTo(page);
       }
     });
   });
