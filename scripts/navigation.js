@@ -22,23 +22,9 @@ const chestCloseSound = new Audio('./chest_close.ogg');
 // Create audio object for menu clicks
 const menuClickSound = new Audio('./menu_click.ogg');
 
-// Create audio objects for each mode
-const modesSounds = {
-  'stronghold': new Audio('./stronghold.ogg'),
-  'ruined-portal': new Audio('./ruined_portal.ogg'),
-  'ranked': new Audio('./ranked.ogg'),
-  'packless-stronghold': new Audio('./packless_stronghold.ogg'),
-  'village': new Audio('./village.ogg'),
-  'classic': new Audio('./classic.ogg'),
-  'structureless': new Audio('./structureless.ogg'),
-  'desert-temple': new Audio('./desert_temple.ogg')
-};
-
-// Preload all sounds to avoid loading delays
-chestOpenSound.preload = 'auto';
-chestCloseSound.preload = 'auto';
-menuClickSound.preload = 'auto';
-Object.values(modesSounds).forEach(sound => sound.preload = 'auto');
+// Set volume for chest sounds (lower volume)
+chestOpenSound.volume = 0.33;
+chestCloseSound.volume = 0.33;
 
 // Initialize navigation
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,17 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupModalHandlers();
   setupModalButtons(); 
 });
-
-function playSound(sound) {
-  sound.currentTime = 0;
-  // Use a promise to handle sound playback
-  const playPromise = sound.play();
-  if (playPromise !== undefined) {
-    playPromise.catch(error => {
-      console.log("Sound play prevented:", error);
-    });
-  }
-}
 
 function setupNavigation() {
   // Add click handlers to all buttons with data-page attribute
@@ -70,24 +45,21 @@ function setupNavigation() {
       
       // Check if it's a modal page
       if (page === 'stats') {
-        playSound(menuClickSound);
+        menuClickSound.currentTime = 0;
+        menuClickSound.play();
         document.getElementById('statsModal').classList.add('show');
         loadStats();
       } else if (page === 'credits') {
-        playSound(menuClickSound);
+        menuClickSound.currentTime = 0;
+        menuClickSound.play();
         document.getElementById('creditsModal').classList.add('show');
       } else if (page === 'help' || page === 'tutorials' || page === 'resources') {
-        // Play menu click for resource buttons
-        playSound(menuClickSound);
-        // Navigate immediately
-        setTimeout(() => navigateTo(page), 150);
+        menuClickSound.currentTime = 0;
+        menuClickSound.play();
+        navigateTo(page);
       } else {
-        // Play mode-specific sound for filter buttons
-        if (modesSounds[page]) {
-          playSound(modesSounds[page]);
-        }
-        // Navigate immediately
-        setTimeout(() => navigateTo(page), 150);
+        // Navigate to page
+        navigateTo(page);
       }
     });
   });
@@ -105,9 +77,11 @@ function setupMiscToggle() {
       
       // Play appropriate sound based on state
       if (miscExpanded.classList.contains('show')) {
-        playSound(chestOpenSound);
+        chestOpenSound.currentTime = 0;
+        chestOpenSound.play();
       } else {
-        playSound(chestCloseSound);
+        chestCloseSound.currentTime = 0;
+        chestCloseSound.play();
       }
     });
   }
@@ -150,7 +124,8 @@ function setupModalButtons() {
   
   if (statsBtn) {
     statsBtn.addEventListener('click', () => {
-      playSound(menuClickSound);
+      menuClickSound.currentTime = 0;
+      menuClickSound.play();
       document.getElementById('statsModal').classList.add('show');
       loadStats();
     });
@@ -158,7 +133,8 @@ function setupModalButtons() {
   
   if (creditsBtn) {
     creditsBtn.addEventListener('click', () => {
-      playSound(menuClickSound);
+      menuClickSound.currentTime = 0;
+      menuClickSound.play();
       document.getElementById('creditsModal').classList.add('show');
     });
   }
