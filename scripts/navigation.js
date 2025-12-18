@@ -19,6 +19,21 @@ const pages = {
 const chestOpenSound = new Audio('./chest_open.ogg');
 const chestCloseSound = new Audio('./chest_close.ogg');
 
+// Create audio object for menu clicks
+const menuClickSound = new Audio('./menu_click.ogg');
+
+// Create audio objects for each mode
+const modesSounds = {
+  'stronghold': new Audio('./stronghold.ogg'),
+  'ruined-portal': new Audio('./ruined_portal.ogg'),
+  'ranked': new Audio('./ranked.ogg'),
+  'packless-stronghold': new Audio('./packless_stronghold.ogg'),
+  'village': new Audio('./village.ogg'),
+  'classic': new Audio('./classic.ogg'),
+  'structureless': new Audio('./structureless.ogg'),
+  'desert-temple': new Audio('./desert_temple.ogg')
+};
+
 // Initialize navigation
 document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
@@ -38,11 +53,26 @@ function setupNavigation() {
       
       // Check if it's a modal page
       if (page === 'stats') {
+        menuClickSound.currentTime = 0;
+        menuClickSound.play();
         document.getElementById('statsModal').classList.add('show');
         loadStats();
       } else if (page === 'credits') {
+        menuClickSound.currentTime = 0;
+        menuClickSound.play();
         document.getElementById('creditsModal').classList.add('show');
+      } else if (page === 'help' || page === 'tutorials' || page === 'resources') {
+        // Play menu click for resource buttons
+        menuClickSound.currentTime = 0;
+        menuClickSound.play();
+        // Navigate to page
+        navigateTo(page);
       } else {
+        // Play mode-specific sound for filter buttons
+        if (modesSounds[page]) {
+          modesSounds[page].currentTime = 0;
+          modesSounds[page].play();
+        }
         // Navigate to page
         navigateTo(page);
       }
@@ -109,6 +139,8 @@ function setupModalButtons() {
   
   if (statsBtn) {
     statsBtn.addEventListener('click', () => {
+      menuClickSound.currentTime = 0;
+      menuClickSound.play();
       document.getElementById('statsModal').classList.add('show');
       loadStats();
     });
@@ -116,6 +148,8 @@ function setupModalButtons() {
   
   if (creditsBtn) {
     creditsBtn.addEventListener('click', () => {
+      menuClickSound.currentTime = 0;
+      menuClickSound.play();
       document.getElementById('creditsModal').classList.add('show');
     });
   }
