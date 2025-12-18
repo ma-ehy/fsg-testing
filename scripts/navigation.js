@@ -15,6 +15,10 @@ const pages = {
   'resources': 'pages/resources.html'
 };
 
+// Create audio objects for chest sounds
+const chestOpenSound = new Audio('./chest_open.ogg');
+const chestCloseSound = new Audio('./chest_close.ogg');
+
 // Initialize navigation
 document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
@@ -55,6 +59,15 @@ function setupMiscToggle() {
       e.preventDefault();
       miscToggle.classList.toggle('active');
       miscExpanded.classList.toggle('show');
+      
+      // Play appropriate sound based on state
+      if (miscExpanded.classList.contains('show')) {
+        chestOpenSound.currentTime = 0; // Reset to start
+        chestOpenSound.play();
+      } else {
+        chestCloseSound.currentTime = 0; // Reset to start
+        chestCloseSound.play();
+      }
     });
   }
 }
@@ -116,4 +129,3 @@ function setupModalButtons() {
     });
   });
 }
-
