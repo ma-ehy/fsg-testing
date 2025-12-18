@@ -53,10 +53,6 @@ function setupNavigation() {
         menuClickSound.currentTime = 0;
         menuClickSound.play();
         document.getElementById('creditsModal').classList.add('show');
-      } else if (page === 'help' || page === 'tutorials' || page === 'resources') {
-        menuClickSound.currentTime = 0;
-        menuClickSound.play();
-        navigateTo(page);
       } else {
         // Navigate to page
         navigateTo(page);
@@ -148,3 +144,4 @@ function setupModalButtons() {
     });
   });
 }
+
