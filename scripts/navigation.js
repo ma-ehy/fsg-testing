@@ -145,3 +145,7 @@ function setupModalButtons() {
   });
 }
 
+// Wrench button handler
+document.getElementById('wrenchBtn')?.addEventListener('click', function() {
+  document.getElementById('helpModal').classList.add('show');
+});
