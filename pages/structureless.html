@@ -43,7 +43,57 @@
       </div>
     </div>
   </div>
+<!-- Feedback Popup -->
+<div class="feedback-popup" id="feedbackPopup">
+  <div class="feedback-content">
+    <p>Have any feedback or stuff you'd like to be added? Join the discord or contact me at maehy56@gmail.com!</p>
+    <button class="feedback-close" onclick="closeFeedback()">✕</button>
+  </div>
+</div>
+  <script>
+let feedbackTimer;
+let timeOnPage = 0;
+let feedbackClosed = sessionStorage.getItem('feedbackClosed') === 'true';
 
+function showFeedbackPopup() {
+  if (!feedbackClosed) {
+    document.getElementById('feedbackPopup').classList.add('show');
+    setTimeout(() => {
+      if (document.getElementById('feedbackPopup').classList.contains('show')) {
+        closeFeedback();
+      }
+    }, 7000);
+  }
+}
+
+function closeFeedback() {
+  document.getElementById('feedbackPopup').classList.remove('show');
+  feedbackClosed = true;
+  sessionStorage.setItem('feedbackClosed', 'true');
+  clearInterval(feedbackTimer);
+}
+
+// Close on page click
+document.addEventListener('click', (e) => {
+  const popup = document.getElementById('feedbackPopup');
+  if (popup.classList.contains('show') && !e.target.closest('.feedback-content')) {
+    closeFeedback();
+  }
+});
+
+// Start timer
+if (!feedbackClosed) {
+  feedbackTimer = setInterval(() => {
+    timeOnPage++;
+    if (timeOnPage % 15 === 0) {
+      const chance = Math.random();
+      if (chance < 0.05) {
+        showFeedbackPopup();
+      }
+    }
+  }, 1000);
+}
+  </script>
   <script>
     let structurelessSeeds = [];
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxMxZ9zStBmy6ERJk1ne6_-zH8eOEce5ISf_wcWYmq2tHYhrwKmNSaYZ_LzDYEHQn3mIQ/exec';
@@ -181,4 +231,5 @@
     loadSeeds();
   </script>
 </body>
+
 </html>
