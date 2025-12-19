@@ -157,20 +157,14 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Start timer
+// Start timer - TESTING VERSION (always shows immediately)
 if (!feedbackClosed) {
-  feedbackTimer = setInterval(() => {
-    timeOnPage++;
-    if (timeOnPage % 15 === 0) {
-      const chance = Math.random();
-      if (chance < 0.05) {
-        showFeedbackPopup();
-      }
-    }
-  }, 1000);
+  setTimeout(() => {
+    showFeedbackPopup();
+  }, 1000); // Shows after 1 second
 }
-</script>
   <script src="scripts/navigation.js"></script>
 </body>
 </html>
+
 
